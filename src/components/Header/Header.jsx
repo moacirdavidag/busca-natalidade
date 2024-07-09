@@ -11,8 +11,8 @@ const Header = ({ theme, toggleTheme }) => {
       alignItems="center"
       sx={{
         width: "100vw",
-        borderBottom: `1px solid ${theme.colors.text}`,
-        background: theme.colors.primary
+        maxWidth: "100%",
+        background: theme.colors.secondary
       }}
       p={3}
     >

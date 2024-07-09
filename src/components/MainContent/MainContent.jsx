@@ -1,50 +1,34 @@
-import React from "react";
-import { Box, FormGroup, FormLabel, Grid, Select, Stack, MenuItem } from "@mui/material";
+import React, { useState } from "react";
+import BrazilMap from "../BrazilMap.js/BrazilMap";
+import { Grid, Stack } from "@mui/material";
+import SearchLocaleBar from "../SearchLocaleBar/SearchLocaleBar";
+import InfoComponent from "../InfoComponent/InfoComponent";
 
-const MainContent = () => {
+const MainContent = ({isLoading, selectedCounty, zoom, center, handleSelectCounty}) => {
+  
   return (
-    <Grid container spacing={2} direction={"row"} width={"100%"} my={1} p={3}>
-      <Grid item xs={8}>
-        <Box
-          sx={{
-            width: "100%",
-            height: "70vh",
-            background: "#FFF",
-            borderRadius: 1,
-          }}
-        >
-          Oi
-        </Box>
+    <Grid
+      container
+      width={"100vw"}
+      spacing={1}
+      direction={"row"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      my={1}
+    >
+      <Grid item xs={7}>
+        <BrazilMap
+          zoom={zoom}
+          center={center}
+          handleSelectCounty={handleSelectCounty}
+        />
       </Grid>
       <Grid item xs={4}>
-        <Stack
-          direction="row"
-          gap={2}
-          sx={{ width: "100%", p: 2, background: "#FFF", borderRadius: 1 }}
-        >
-          <FormGroup sx={{flex: 1}}>
-            <FormLabel htmlFor="estado-select">Estado</FormLabel>
-            <Select id="estado-select">
-              <MenuItem value="" disabled>
-                Selecione um estado
-              </MenuItem>
-              <MenuItem value="SP">São Paulo</MenuItem>
-              <MenuItem value="RJ">Rio de Janeiro</MenuItem>
-            </Select>
-          </FormGroup>
-          <FormGroup sx={{flex: 1}}>
-            <FormLabel htmlFor="municipio-select">Município</FormLabel>
-            <Select id="municipio-select" placeholder="Município">
-              <MenuItem value="" disabled>
-                Selecione um município
-              </MenuItem>
-              <MenuItem value="sao_paulo">São Paulo</MenuItem>
-              <MenuItem value="rio_de_janeiro">Rio de Janeiro</MenuItem>
-            </Select>
-          </FormGroup>
+        <Stack width={"100%"} gap={2} direction={"column"}>
+          <SearchLocaleBar />
+          <InfoComponent isLoading={isLoading} selectedCounty={selectedCounty} />
         </Stack>
       </Grid>
-      
     </Grid>
   );
 };
