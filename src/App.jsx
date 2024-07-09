@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import { GlobalStyles } from "./styles/global";
+import { useTheme } from "./context/ThemeContext";
+import Header from "./components/Header/Header";
+import MainContent from "./components/MainContent/MainContent";
+import { Box } from "@mui/material";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { theme, toggleTheme } = useTheme();
+  const [zoom, setZoom] = useState(4);
+  const [center, setCenter] = useState([-410, -14]);
+  const [selectedCounty, setSelectedCounty] = useState(null);
+
+  const handleSelectCounty = (county) => {
+    setSelectedCounty(county);
+    setZoom(50);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Box style={{ width: "100%", maxWidth: "100vw" }}>
+      <GlobalStyles />
+      <Header theme={theme} toggleTheme={toggleTheme} />
+      <MainContent
+        center={center}
+        zoom={zoom}
+        handleSelectCounty={handleSelectCounty}
+        selectedCounty={selectedCounty}
+        isLoading={false}
+      />
+    </Box>
+  );
 }
 
-export default App
+export default App;
