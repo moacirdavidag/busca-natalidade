@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import BrazilMap from "../BrazilMap/BrazilMap";
-import { Grid, Stack } from "@mui/material";
+import { Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
 import SearchLocaleBar from "../SearchLocaleBar/SearchLocaleBar";
 import InfoComponent from "../InfoComponent/InfoComponent";
 
@@ -15,15 +15,20 @@ const MainContent = ({
   handleSelectState,
   selectedState,
 }) => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Grid
       container
-      width={"100vw"}
-      spacing={1}
-      direction={"row"}
-      alignItems={"center"}
-      justifyContent={"center"}
+      width="100%"
+      spacing={isSmallScreen ? 2 : 1} 
+      direction={isSmallScreen ? "column" : "row"} 
+      alignItems="center"
+      justifyContent="center"
       my={1}
+      role="region"
+      aria-labelledby="main-content"
     >
       <Grid item xs={7}>
         <BrazilMap
@@ -33,7 +38,7 @@ const MainContent = ({
         />
       </Grid>
       <Grid item xs={4}>
-        <Stack width={"100%"} gap={2} direction={"column"}>
+        <Stack width="100%" gap={2} direction="column">
           <SearchLocaleBar
             selectedCounty={selectedCounty}
             handleChangeCounty={handleSelectCounty}

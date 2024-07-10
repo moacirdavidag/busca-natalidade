@@ -14,7 +14,6 @@ const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
     setSelectedTab(newValue);
   };
 
-
   return (
     <Box
       sx={{
@@ -25,7 +24,7 @@ const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
       }}
     >
       {!selectedCounty ? (
-        <Typography sx={{ color: theme.colors.text }}>
+        <Typography component="span" sx={{ color: theme.colors.text }}>
           Selecione uma cidade
         </Typography>
       ) : isLoading ? (
@@ -34,7 +33,11 @@ const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
         <>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs value={selectedTab} onChange={handleChangeTab}>
-              <Tab label="Dados Gerais" value={0} />
+              <Tab
+                label="Dados Gerais"
+                value={0}
+                aria-label="Tabs de informações gerais"
+              />
             </Tabs>
           </Box>
           {selectedTab === 0 && (
@@ -43,20 +46,21 @@ const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
                 direction="row"
                 width={"100%"}
                 justifyContent={"space-around"}
+                aria-busy={isLoading ? "true" : "false"}
               >
                 <Stack direction={"row"} gap={1}>
-                  <Typography fontWeight={"bold"} color={theme.colors.text}>
+                  <Typography component="span"fontWeight={"bold"} color={theme.colors.text}>
                     Cidade:
                   </Typography>{" "}
-                  <Typography color={theme.colors.text}>
+                  <Typography component="span" color={theme.colors.text}>
                     {selectedCounty.properties.name}
                   </Typography>
                 </Stack>
                 <Stack direction={"row"} gap={1}>
-                  <Typography fontWeight={"bold"} color={theme.colors.text}>
+                  <Typography component="span" fontWeight={"bold"} color={theme.colors.text}>
                     Estado:
                   </Typography>{" "}
-                  <Typography color={theme.colors.text}>
+                  <Typography component="span" color={theme.colors.text}>
                     {selectedState}
                   </Typography>
                 </Stack>
