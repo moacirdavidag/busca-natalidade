@@ -1,14 +1,17 @@
-import { Box, Divider, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Divider, Stack, Tab, Tabs, Typography, useMediaQuery, useTheme as muiTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
 import CustomTab from "../CustomTab/CustomTab";
 import { useTheme } from "../../context/ThemeContext";
-import { apiDadosNatalidade } from "../../services/api";
 import Charts from "../Charts/Charts";
 
 const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const { theme } = useTheme();
+  const { theme } = useTheme()
+  ;
+  const themeMui = muiTheme();
+
+  const isSmallScreen = useMediaQuery(themeMui.breakpoints.down("sm"));
 
   const handleChangeTab = (event, newValue) => {
     setSelectedTab(newValue);
@@ -17,7 +20,7 @@ const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
   return (
     <Box
       sx={{
-        width: "100%",
+        width: `${isSmallScreen ? '95vw' : '100%'}`,
         backgroundColor: theme.colors.secondary,
         borderRadius: 2,
         padding: 2,

@@ -17,28 +17,29 @@ const MainContent = ({
 }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
 
   return (
     <Grid
       container
       width="100%"
-      spacing={isSmallScreen ? 2 : 1} 
-      direction={isSmallScreen ? "column" : "row"} 
+      spacing={isSmallScreen ? 2 : 1}
+      direction={isSmallScreen ? "column" : "row"}
       alignItems="center"
       justifyContent="center"
       my={1}
       role="region"
       aria-labelledby="main-content"
     >
-      <Grid item xs={7}>
+      <Grid item xs={12} md={isSmallScreen ? 12 : 7}>
         <BrazilMap
           zoom={zoom}
           center={center}
           handleSelectCounty={handleSelectCounty}
         />
       </Grid>
-      <Grid item xs={4}>
-        <Stack width="100%" gap={2} direction="column">
+      <Grid item xs={12} md={isSmallScreen ? 12 : 4}>
+        <Stack width="100%" gap={isExtraSmallScreen ? 1 : 2} direction="column">
           <SearchLocaleBar
             selectedCounty={selectedCounty}
             handleChangeCounty={handleSelectCounty}
