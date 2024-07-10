@@ -19,8 +19,10 @@ function App() {
 
   const handleSelectCounty = (county) => {
     setIsLoading(true);
+    if(!selectedState && county?.properties?.uf) {
+      setSelectedState(county?.properties?.uf);
+    }
     setSelectedCounty(county);
-    setZoom(50);
     setIsLoading(false);
   };
 
@@ -62,6 +64,7 @@ function App() {
       handleGetCounties();
     }
   }, [selectedState])
+
 
   return (
     <Box style={{ width: "100%", maxWidth: "100vw" }}>

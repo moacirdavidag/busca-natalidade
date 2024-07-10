@@ -45,6 +45,7 @@ const MainContent = ({
           <InfoComponent
             isLoading={isLoading}
             selectedCounty={selectedCounty}
+            selectedState={selectedState}
           />
         </Stack>
       </Grid>

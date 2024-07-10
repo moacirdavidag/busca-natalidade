@@ -1,29 +1,12 @@
-import React, { useEffect, useState, Suspense, lazy } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { Tooltip } from "@mui/material";
 import axios from "axios";
 import Loading from "../Loading/Loading";
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 
-const ComposableMap = lazy(() =>
-  import("react-simple-maps").then((module) => ({
-    default: module.ComposableMap,
-  }))
-);
-const Geographies = lazy(() =>
-  import("react-simple-maps").then((module) => ({
-    default: module.Geographies,
-  }))
-);
-const Geography = lazy(() =>
-  import("react-simple-maps").then((module) => ({ default: module.Geography }))
-);
-const ZoomableGroup = lazy(() =>
-  import("react-simple-maps").then((module) => ({
-    default: module.ZoomableGroup,
-  }))
-);
 
-const geoUrl = "/mapa-brasil.json";
+const geoUrl = "/municipios-brasil.json";
 
 const BrazilMap = ({ zoom, center, handleSelectCounty }) => {
   const { theme } = useTheme();

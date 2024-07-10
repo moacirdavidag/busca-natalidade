@@ -38,7 +38,7 @@ const SearchLocaleBar = ({
           labelId="estado-label"
           id="demo-simple-select"
           value={selectedState}
-          label="Estado"
+          label="Estado:"
           onChange={(event) => {
             const UF = event.target.value;
             handleChangeState(UF);
@@ -61,13 +61,14 @@ const SearchLocaleBar = ({
           labelId="municipio-label"
           id="demo-simple-select"
           disabled={!selectedState}
-          value={selectedCounty?.properties?.id}
-          label="Município"
+          value={selectedCounty}
+          label="Município:"
           onChange={(event) => {
-            const COUNTY_ID = event.target.value;
+            const county = event.target.value;
             handleChangeCounty({
               properties: {
-                id: COUNTY_ID
+                codigo: county.id,
+                name: county.nome
               }
             })
           }}
@@ -75,7 +76,7 @@ const SearchLocaleBar = ({
         >
           {counties &&
             counties.map((county) => (
-              <MenuItem value={county.id} sx={{ color: theme.colors.text }}>
+              <MenuItem value={county} sx={{ color: theme.colors.text }}>
                 {county.nome}
               </MenuItem>
             ))}
