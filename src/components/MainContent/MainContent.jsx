@@ -4,8 +4,17 @@ import { Grid, Stack } from "@mui/material";
 import SearchLocaleBar from "../SearchLocaleBar/SearchLocaleBar";
 import InfoComponent from "../InfoComponent/InfoComponent";
 
-const MainContent = ({isLoading, selectedCounty, zoom, center, handleSelectCounty}) => {
-  
+const MainContent = ({
+  isLoading,
+  selectedCounty,
+  zoom,
+  center,
+  handleSelectCounty,
+  counties,
+  states,
+  handleSelectState,
+  selectedState,
+}) => {
   return (
     <Grid
       container
@@ -25,8 +34,18 @@ const MainContent = ({isLoading, selectedCounty, zoom, center, handleSelectCount
       </Grid>
       <Grid item xs={4}>
         <Stack width={"100%"} gap={2} direction={"column"}>
-          <SearchLocaleBar />
-          <InfoComponent isLoading={isLoading} selectedCounty={selectedCounty} />
+          <SearchLocaleBar
+            selectedCounty={selectedCounty}
+            handleChangeCounty={handleSelectCounty}
+            counties={counties}
+            states={states}
+            handleChangeState={handleSelectState}
+            selectedState={selectedState}
+          />
+          <InfoComponent
+            isLoading={isLoading}
+            selectedCounty={selectedCounty}
+          />
         </Stack>
       </Grid>
     </Grid>
