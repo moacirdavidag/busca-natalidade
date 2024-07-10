@@ -1,16 +1,14 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { Tooltip } from "@mui/material";
-import axios from "axios";
 import Loading from "../Loading/Loading";
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
-
 
 const geoUrl = "/municipios-brasil.json";
 
 const BrazilMap = ({ zoom, center, handleSelectCounty }) => {
   const { theme } = useTheme();
-  const [geoData, setGeoData] = useState(null);
+  const [geoData, setGeoData] = useState({ type: "FeatureCollection", features: [] });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -36,7 +34,7 @@ const BrazilMap = ({ zoom, center, handleSelectCounty }) => {
         width: "50vw",
         height: "auto",
         border: `1px solid ${theme.colors.text}`,
-        background: theme.colors.secondary,
+        background: "#AACDCD",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -57,7 +55,7 @@ const BrazilMap = ({ zoom, center, handleSelectCounty }) => {
                 height: "auto",
               }}
             >
-              <Geographies geography={geoData}>
+              <Geographies geography={geoUrl}>
                 {({ geographies }) =>
                   geographies.map((geo) => (
                     <Tooltip key={geo.id} title={geo.properties.name}>

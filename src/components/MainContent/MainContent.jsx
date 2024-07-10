@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BrazilMap from "../BrazilMap.js/BrazilMap";
+import BrazilMap from "../BrazilMap/BrazilMap";
 import { Grid, Stack } from "@mui/material";
 import SearchLocaleBar from "../SearchLocaleBar/SearchLocaleBar";
 import InfoComponent from "../InfoComponent/InfoComponent";

@@ -5,7 +5,7 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTheme } from "../../context/ThemeContext";
 
 const geoUrl = "/mapa-brasil.json";
@@ -61,14 +61,15 @@ const SearchLocaleBar = ({
           labelId="municipio-label"
           id="demo-simple-select"
           disabled={!selectedState}
-          value={selectedCounty}
+          value={counties?.find(county => county.id === selectedState.id)}
           label="Município:"
           onChange={(event) => {
             const county = event.target.value;
             handleChangeCounty({
+              id: county.id,
               properties: {
                 codigo: county.id,
-                name: county.nome
+                name: county.name ?? county.nome
               }
             })
           }}
