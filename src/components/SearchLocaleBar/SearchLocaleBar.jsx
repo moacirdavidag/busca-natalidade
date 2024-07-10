@@ -5,10 +5,19 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 
-const SearchLocaleBar = ({selectedCounty, handleChangeCounty, selectedState, handleChangeState}) => {
+const geoUrl = "/mapa-brasil.json";
+
+const SearchLocaleBar = ({
+  selectedCounty,
+  handleChangeCounty,
+  selectedState,
+  handleChangeState,
+  counties,
+  states,
+}) => {
   const { theme } = useTheme();
   return (
     <Stack
@@ -28,14 +37,20 @@ const SearchLocaleBar = ({selectedCounty, handleChangeCounty, selectedState, han
         <Select
           labelId="estado-label"
           id="demo-simple-select"
-          //   value={age}
-          label="Estado"
-          //   onChange={handleChange}
+          value={selectedState}
+          label="Estado:"
+          onChange={(event) => {
+            const UF = event.target.value;
+            handleChangeState(UF);
+          }}
           sx={{ background: theme.colors.primary }}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {states &&
+            states.map((state) => (
+              <MenuItem value={state.sigla} sx={{ color: theme.colors.text }}>
+                {state.nome}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
       <FormControl fullWidth>
@@ -46,14 +61,25 @@ const SearchLocaleBar = ({selectedCounty, handleChangeCounty, selectedState, han
           labelId="municipio-label"
           id="demo-simple-select"
           disabled={!selectedState}
-          //   value={age}
-          label="Município"
-          //   onChange={handleChange}
-          sx={{ background: selectedState ? theme.colors.primary : 'disabled' }}
+          value={selectedCounty}
+          label="Município:"
+          onChange={(event) => {
+            const county = event.target.value;
+            handleChangeCounty({
+              properties: {
+                codigo: county.id,
+                name: county.nome
+              }
+            })
+          }}
+          sx={{ background: selectedState ? theme.colors.primary : "disabled" }}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {counties &&
+            counties.map((county) => (
+              <MenuItem value={county} sx={{ color: theme.colors.text }}>
+                {county.nome}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </Stack>
