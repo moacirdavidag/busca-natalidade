@@ -1,14 +1,6 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material";
+import React from "react";
 import { useTheme } from "../../context/ThemeContext";
-
-const geoUrl = "/mapa-brasil.json";
 
 const SearchLocaleBar = ({
   selectedCounty,
@@ -19,6 +11,7 @@ const SearchLocaleBar = ({
   states,
 }) => {
   const { theme } = useTheme();
+
   return (
     <Stack
       sx={{
@@ -36,18 +29,22 @@ const SearchLocaleBar = ({
         </InputLabel>
         <Select
           labelId="estado-label"
-          id="demo-simple-select"
+          id="demo-simple-select-estado"
           value={selectedState}
           label="Estado:"
           onChange={(event) => {
             const UF = event.target.value;
             handleChangeState(UF);
           }}
-          sx={{ background: theme.colors.primary }}
+          aria-label="Seleção de estado"
+          sx={{
+            background: theme.colors.primary,
+            color: theme.colors.text,
+          }}
         >
           {states &&
             states.map((state) => (
-              <MenuItem value={state.sigla} sx={{ color: theme.colors.text }}>
+              <MenuItem key={state.sigla} value={state.sigla}>
                 {state.nome}
               </MenuItem>
             ))}
@@ -59,24 +56,31 @@ const SearchLocaleBar = ({
         </InputLabel>
         <Select
           labelId="municipio-label"
-          id="demo-simple-select"
+          id="demo-simple-select-municipio"
           disabled={!selectedState}
-          value={selectedCounty}
+          value={selectedCounty?.id ?? ""}
           label="Município:"
           onChange={(event) => {
-            const county = event.target.value;
+            const countyId = event.target.value;
+            const county = counties.find((county) => county.id === countyId);
             handleChangeCounty({
+              id: county.id,
               properties: {
                 codigo: county.id,
-                name: county.nome
-              }
-            })
+                name: county.name ?? county.nome,
+              },
+            });
           }}
-          sx={{ background: selectedState ? theme.colors.primary : "disabled" }}
+          aria-label="Seleção de município"
+          aria-disabled={!selectedState}
+          sx={{
+            background: selectedState ? theme.colors.primary : "disabled",
+            color: theme.colors.text,
+          }}
         >
           {counties &&
             counties.map((county) => (
-              <MenuItem value={county} sx={{ color: theme.colors.text }}>
+              <MenuItem key={county.id} value={county.id}>
                 {county.nome}
               </MenuItem>
             ))}

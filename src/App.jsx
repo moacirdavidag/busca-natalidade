@@ -19,15 +19,16 @@ function App() {
 
   const handleSelectCounty = (county) => {
     setIsLoading(true);
-    if(!selectedState && county?.properties?.uf) {
-      setSelectedState(county?.properties?.uf);
+    if (county?.properties?.uf && county?.properties?.uf !== selectedState) {
+      setSelectedState(county.properties.uf);
     }
     setSelectedCounty(county);
     setIsLoading(false);
   };
-
+  
   const handleSelectState = (state) => {
     setSelectedState(state);
+    setSelectedCounty(null);
   }
 
   const handleGetStates = useCallback(async () => {

@@ -4,6 +4,7 @@ import Loading from "../Loading/Loading";
 import CustomTab from "../CustomTab/CustomTab";
 import { useTheme } from "../../context/ThemeContext";
 import { apiDadosNatalidade } from "../../services/api";
+import Charts from "../Charts/Charts";
 
 const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -12,22 +13,6 @@ const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
   const handleChangeTab = (event, newValue) => {
     setSelectedTab(newValue);
   };
-
-  const handleGetAPIData = async () => {
-    try {
-      await apiDadosNatalidade.get(`?localidades=N6[${selectedCounty.properties.codigo}]&classificacao=1[all]|1598[all]|12232[all]
-      `).then((response) => {
-        if(response.status === 200) {
-        }
-      });
-    } catch (error) {
-      console.log(`Erro ao obter os dados da API: ${error.message}`);
-    }
-  };
-
-  useEffect(() => {
-    handleGetAPIData();
-  }, [selectedCounty])
 
   return (
     <Box
@@ -39,7 +24,7 @@ const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
       }}
     >
       {!selectedCounty ? (
-        <Typography sx={{ color: theme.colors.text }}>
+        <Typography component="span" sx={{ color: theme.colors.text }}>
           Selecione uma cidade
         </Typography>
       ) : isLoading ? (
@@ -48,8 +33,11 @@ const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
         <>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs value={selectedTab} onChange={handleChangeTab}>
-              <Tab label="Dados Gerais" value={0} />
-              <Tab label="Gráficos por situação" value={1} />
+              <Tab
+                label="Dados Gerais"
+                value={0}
+                aria-label="Tabs de informações gerais"
+              />
             </Tabs>
           </Box>
           {selectedTab === 0 && (
@@ -58,29 +46,29 @@ const InfoComponent = ({ isLoading, selectedCounty, selectedState }) => {
                 direction="row"
                 width={"100%"}
                 justifyContent={"space-around"}
+                aria-busy={isLoading ? "true" : "false"}
               >
                 <Stack direction={"row"} gap={1}>
-                  <Typography fontWeight={"bold"} color={theme.colors.text}>
+                  <Typography component="span"fontWeight={"bold"} color={theme.colors.text}>
                     Cidade:
                   </Typography>{" "}
-                  <Typography color={theme.colors.text}>
+                  <Typography component="span" color={theme.colors.text}>
                     {selectedCounty.properties.name}
                   </Typography>
                 </Stack>
                 <Stack direction={"row"} gap={1}>
-                  <Typography fontWeight={"bold"} color={theme.colors.text}>
+                  <Typography component="span" fontWeight={"bold"} color={theme.colors.text}>
                     Estado:
                   </Typography>{" "}
-                  <Typography color={theme.colors.text}>
+                  <Typography component="span" color={theme.colors.text}>
                     {selectedState}
                   </Typography>
                 </Stack>
               </Stack>
               <Divider sx={{ my: 2 }} />
+              <Charts selectedCounty={selectedCounty} />
             </CustomTab>
           )}
-          {selectedTab === 1 && <CustomTab>Olá</CustomTab>}
-          {selectedTab === 2 && <CustomTab>Oiii</CustomTab>}
         </>
       )}
     </Box>
