@@ -31,11 +31,10 @@ const Charts = ({ selectedCounty }) => {
     }
   };
 
-  useEffect(() => {
-    handleGetAPIData();
-  }, [selectedCounty]);
+
 
   useEffect(() => {
+    handleGetAPIData();
     const fetchData = async () => {
       if (data && data.length > 0) {
         let urbanCount = 0;
@@ -82,11 +81,7 @@ const Charts = ({ selectedCounty }) => {
     };
 
     fetchData();
-
-    return () => {
-      setData([]);
-    }
-  }, [selectedCounty]);
+  }, [selectedCounty, data]);
 
   const pieOption = {
     tooltip: {

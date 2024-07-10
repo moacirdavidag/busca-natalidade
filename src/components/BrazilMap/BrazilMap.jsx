@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { Tooltip } from "@mui/material";
+import { Tooltip, useMediaQuery, useTheme as muiTheme } from "@mui/material";
 import Loading from "../Loading/Loading";
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 
@@ -8,8 +8,13 @@ const geoUrl = "/municipios-brasil.json";
 
 const BrazilMap = ({ zoom, center, handleSelectCounty }) => {
   const { theme } = useTheme();
+  const themeMui = muiTheme();
   const [geoData, setGeoData] = useState({ type: "FeatureCollection", features: [] });
   const [isLoading, setIsLoading] = useState(true);
+
+  const isSmallScreen = useMediaQuery(themeMui.breakpoints.down("sm"));
+  const isMediumScreen = useMediaQuery(themeMui.breakpoints.down("md"));
+
 
   useEffect(() => {
     const fetchMapData = async () => {
@@ -31,7 +36,7 @@ const BrazilMap = ({ zoom, center, handleSelectCounty }) => {
   return (
     <div
       style={{
-        width: "50vw",
+        width: `${isSmallScreen ? '100vw' : isMediumScreen ? '100vw' : '50vw'}`,
         height: "auto",
         border: `1px solid ${theme.colors.text}`,
         background: "#AACDCD",

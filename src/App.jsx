@@ -17,7 +17,7 @@ function App() {
   const [selectedState, setSelectedState] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSelectCounty = (county) => {
+  const handleSelectCounty = async (county) => {
     setIsLoading(true);
     if (county?.properties?.uf && county?.properties?.uf !== selectedState) {
       setSelectedState(county.properties.uf);
